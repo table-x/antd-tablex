@@ -1,6 +1,6 @@
 {
   "name": "antd-tablex",
-  "version": "0.8.0",
+  "version": "0.5.0",
   "description": "An powerful table and antd-based implementation",
   "main": "src/index.js",
   "scripts": {
