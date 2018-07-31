@@ -1,0 +1,34 @@
+{
+  "name": "antd-tablex",
+  "version": "0.8.0",
+  "description": "An powerful table and antd-based implementation",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mzonghao/antd-tablex.git"
+  },
+  "keywords": [
+    "antd",
+    "react",
+    "component",
+    "table",
+    "tablex"
+  ],
+  "author": "mzonghao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mzonghao/antd-tablex/issues"
+  },
+  "homepage": "https://github.com/mzonghao/antd-tablex#readme",
+  "dependencies": {
+    "antd": "^3.6.3",
+    "localforage": "^1.7.2",
+    "lodash": "^4.17.10",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
+  }
+}
