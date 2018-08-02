@@ -7,8 +7,7 @@ import {
   MANAGE_COLUMN_PROPS
 } from '../../constants';
 
-const RadioGroup = Radio.Group;
-const RadioButton = Radio.Button;
+const { Group: RadioGroup, Button: RadioButton } = Radio;
 
 export default class ManageSettingColumns extends React.Component {
   static propTypes = {

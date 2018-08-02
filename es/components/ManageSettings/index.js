@@ -22,7 +22,7 @@ export default class ManageSettings extends React.Component {
     this.onResetAll = this.onResetAll.bind(this);
     this.state = {
       visible: false,
-      activeTabKey: 'columns',
+      activeTabKey: 'table',
       tabList: [
         {
           key: 'table',

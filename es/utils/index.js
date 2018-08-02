@@ -10,6 +10,7 @@ import {
   MANAGE_PAGINATION_PROPS,
   MANAGE_OTHER_TABLE_PROPS
 } from '../constants';
+
 // generate query
 export const generatePageQuery = (pagination) => {
   const { current, pageSize } = pagination;
@@ -77,5 +78,3 @@ export const generateUUID = () => {
 };
 
 export const compareDiff = () => {};
-
-export const generateRealColumns = () => {};

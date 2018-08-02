@@ -19,6 +19,7 @@ import {
   generateSearchOptions,
   generateQueryString
 } from './utils';
+import TableXSearch from './components/TableXSearch';
 import TableXError from './components/TableXError';
 // import TableXCore from './components/TableXCore';
 import ManageSettings from './components/ManageSettings';
@@ -35,7 +36,9 @@ export default class TableX extends React.Component {
     columns: PropTypes.array,
     formatQueryString: PropTypes.any,
     onSearch: PropTypes.func,
-    errors: PropTypes.any
+    errors: PropTypes.any,
+    searchOptions: PropTypes.any,
+    realtime: PropTypes.any
   };
 
   static defaultProps = {
@@ -48,7 +51,9 @@ export default class TableX extends React.Component {
     tableProps: {},
     formatQueryString: null,
     onSearch: () => {},
-    errors: {}
+    errors: {},
+    searchOptions: [],
+    realtime: true
   };
 
   constructor(props) {
@@ -65,7 +70,7 @@ export default class TableX extends React.Component {
     otherTableProps: {},
     localConfigs: {},
     localColumns: [],
-    searchOptions: [],
+    searchQuery: [],
     query: {},
     queryString: ''
   };
@@ -94,9 +99,9 @@ export default class TableX extends React.Component {
   }
 
   onTableChange(pagination, filters, sorter) {
-    const { searchOptions } = this.state;
+    const { searchQuery } = this.state;
     const query = {
-      pagination, filters, sorter, searchOptions
+      pagination, filters, sorter, searchQuery
     };
     const queryString = generateQueryString(query);
     this.setState({ pagination, query, queryString }, this.onSearchProxy);
@@ -178,7 +183,7 @@ export default class TableX extends React.Component {
 
   render() {
     const {
-      loading, data, errors, manage
+      loading, data, errors, manage, searchOptions
     } = this.props;
     const {
       columns, pagination, otherTableProps, localConfigs, localColumns
@@ -210,7 +215,9 @@ export default class TableX extends React.Component {
 
     return (
       <div className="ant-table-x">
-        {/*<HeaderSearch />*/}
+        <TableXSearch
+          searchOptions={searchOptions}
+        />
         <TableXError
           errors={errors}
           handleClick={this.onSearchProxy}

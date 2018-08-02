@@ -9,4 +9,4 @@ export const MANAGE_PAGINATION_PROPS = ['pageSize'];
 
 export const MANAGE_OTHER_TABLE_PROPS = ['bordered', 'size'];
 
-// International
+// todo... International

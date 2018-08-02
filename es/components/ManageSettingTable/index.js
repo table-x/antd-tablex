@@ -5,8 +5,7 @@ import {
 } from 'antd';
 import { MANAGE_OTHER_TABLE_PROPS } from '../../constants';
 
-const RadioGroup = Radio.Group;
-const RadioButton = Radio.Button;
+const { Group: RadioGroup, Button: RadioButton } = Radio;
 
 export default class ManageSettingTable extends React.Component {
   static propTypes = {
@@ -17,9 +16,9 @@ export default class ManageSettingTable extends React.Component {
   onChange(v, k) {
     const { localConfigs, resetLocalTableProps } = this.props;
     const changedLocalConfigs = {
-      ...localConfigs
+      ...localConfigs,
+      [k]: v
     };
-    changedLocalConfigs[k] = v;
     resetLocalTableProps(changedLocalConfigs);
   }
 
