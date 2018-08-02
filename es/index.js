@@ -16,7 +16,8 @@ import {
   generatePagination,
   generateOtherTableProps,
   generateLocalConfigs,
-  generateSearchOptions,
+  generateSearchFullQuery,
+  generateSearchQuery,
   generateQueryString
 } from './utils';
 import TableXSearch from './components/TableXSearch';
@@ -35,10 +36,10 @@ export default class TableX extends React.Component {
     tableProps: PropTypes.any,
     columns: PropTypes.array,
     formatQueryString: PropTypes.any,
-    onSearch: PropTypes.func,
+    onRefresh: PropTypes.func,
     errors: PropTypes.any,
     searchOptions: PropTypes.any,
-    realtime: PropTypes.any
+    realTime: PropTypes.any
   };
 
   static defaultProps = {
@@ -50,10 +51,10 @@ export default class TableX extends React.Component {
     pagination: {},
     tableProps: {},
     formatQueryString: null,
-    onSearch: () => {},
+    onRefresh: () => {},
     errors: {},
     searchOptions: [],
-    realtime: true
+    realTime: true
   };
 
   constructor(props) {
@@ -61,7 +62,8 @@ export default class TableX extends React.Component {
     this.resetLocalTableProps = this.resetLocalTableProps.bind(this);
     this.resetLocalColumnsProps = this.resetLocalColumnsProps.bind(this);
     this.onTableChange = this.onTableChange.bind(this);
-    this.onSearchProxy = this.onSearchProxy.bind(this);
+    this.onChangeSearchQuery = this.onChangeSearchQuery.bind(this);
+    this.onRefreshProxy = this.onRefreshProxy.bind(this);
   }
 
   state = {
@@ -70,6 +72,7 @@ export default class TableX extends React.Component {
     otherTableProps: {},
     localConfigs: {},
     localColumns: [],
+    searchFullQuery: [],
     searchQuery: [],
     query: {},
     queryString: ''
@@ -104,13 +107,29 @@ export default class TableX extends React.Component {
       pagination, filters, sorter, searchQuery
     };
     const queryString = generateQueryString(query);
-    this.setState({ pagination, query, queryString }, this.onSearchProxy);
+    this.setState({ pagination, query, queryString }, this.onRefreshProxy);
   }
 
-  onSearchProxy() {
-    const { onSearch } = this.props;
+  onChangeSearchQuery(searchFullQuery) {
+    const { formatQueryString } = this.props;
+    const { query: queryState } = this.state;
+    const searchQuery = generateSearchQuery(searchFullQuery);
+    const query = { ...queryState, searchQuery };
+    const queryString = generateQueryString(query, formatQueryString);
+    this.setState({
+      searchFullQuery,
+      searchQuery,
+      query,
+      queryString
+    }, this.onRefreshProxy);
+  }
+
+  onRefreshProxy() {
+    const { onRefresh } = this.props;
     const { query, queryString } = this.state;
-    onSearch(query, queryString);
+    console.log(query, 'query');
+    console.log(queryString, 'queryString');
+    onRefresh(query, queryString);
   }
 
   initStateData() {
@@ -119,6 +138,7 @@ export default class TableX extends React.Component {
       tableProps,
       columns: columnsProps,
       pagination: paginationProps,
+      searchOptions,
       formatQueryString
     } = this.props;
     this.dbOfConfigs = new LocalforageService(localDefaultConfigs.configsStorageName);
@@ -138,8 +158,10 @@ export default class TableX extends React.Component {
           tableDefaultProps, tableProps, preLocalConfigs
         );
         const localConfigs = generateLocalConfigs(pagination, otherTableProps);
-        const searchOptions = generateSearchOptions();
-        const query = { pagination, searchOptions };
+        // todo...根据 searchOptions 生成 searchFullQuery, 再生成 searchQuery, 和 pageQuery 一起注入 query
+        const searchFullQuery = generateSearchFullQuery(searchOptions);
+        const searchQuery = generateSearchQuery(searchFullQuery);
+        const query = { pagination, searchQuery };
         const queryString = generateQueryString(query, formatQueryString);
         this.setState({
           localConfigs,
@@ -147,9 +169,11 @@ export default class TableX extends React.Component {
           columns,
           pagination,
           otherTableProps,
+          searchFullQuery,
+          searchQuery,
           query,
           queryString
-        }, this.onSearchProxy);
+        }, this.onRefreshProxy);
         this.onSetLocalConfigs(localConfigs);
         this.onSetLocalColumns(localColumns);
       })
@@ -183,10 +207,11 @@ export default class TableX extends React.Component {
 
   render() {
     const {
-      loading, data, errors, manage, searchOptions
+      loading, data, errors, manage, searchOptions, realTime
     } = this.props;
     const {
-      columns, pagination, otherTableProps, localConfigs, localColumns
+      columns, pagination, otherTableProps, localConfigs, localColumns,
+      searchFullQuery, searchQuery
     } = this.state;
     const { visible, title, core } = manage;
     let manageTitle;
@@ -204,7 +229,7 @@ export default class TableX extends React.Component {
           />
           <ManageRefresh
             iconType="reload"
-            handleClick={this.onSearchProxy}
+            handleClick={this.onRefreshProxy}
           />
         </div>
       );
@@ -216,11 +241,15 @@ export default class TableX extends React.Component {
     return (
       <div className="ant-table-x">
         <TableXSearch
+          realTime={realTime}
+          searchQuery={searchQuery}
           searchOptions={searchOptions}
+          searchFullQuery={searchFullQuery}
+          onChangeSearchQuery={this.onChangeSearchQuery}
         />
         <TableXError
           errors={errors}
-          handleClick={this.onSearchProxy}
+          handleClick={this.onRefreshProxy}
         />
         <Card
           bodyStyle={{ padding: 0 }}

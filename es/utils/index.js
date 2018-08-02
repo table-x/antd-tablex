@@ -56,13 +56,24 @@ export const generateLocalConfigs = (pagination, otherTableProps) => {
   return merge(pagiLocalConfigs, tableLocalConfigs);
 };
 
-export const generateSearchOptions = () => ([]); // todo...
+/* generate refresh query */
+export const generateSearchFullQuery = searchOptions => (
+  searchOptions.map(option => ({
+    keyword: option.keyword,
+    predicate: option.defaultPredicate,
+    value: option.defaultValue
+  }))
+);
+
+export const generateSearchQuery = searchFullQuery => (
+  filter(searchFullQuery, p => (p.value || typeof (p.value) === 'boolean'))
+);
 
 export const generateQueryString = (query, formatQueryString) => {
   if (isFunction(formatQueryString)) {
     return formatQueryString(query);
   }
-  const { pagination/*, filters, sorter, searchOptions*/ } = query;
+  const { pagination/*, filters, sorter, searchQuery*/ } = query;
   const useFullQuery = generatePageQuery(pagination);
   return `?${qs.stringify(useFullQuery)}`;
 };
@@ -76,5 +87,3 @@ export const generateUUID = () => {
     return v.toString(16);
   });
 };
-
-export const compareDiff = () => {};

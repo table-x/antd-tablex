@@ -19,7 +19,7 @@ export default class SearchItem extends React.Component {
   constructor(props) {
     super(props);
     this.onUpdateOption = this.onUpdateOption.bind(this);
-    this.state = { optionConfigs: { ...props.option } };
+    this.state = { optionConfig: { ...props.option } };
   }
 
   onBlurOrChange(option, value) {
@@ -33,28 +33,28 @@ export default class SearchItem extends React.Component {
 
   onUpdateOption() {
     const { option } = this.props;
-    const optionConfigs = Object.assign({}, option);
-    this.setState({ optionConfigs });
+    const optionConfig = Object.assign({}, option);
+    this.setState({ optionConfig });
   }
 
   render() {
     const { form, onFieldChange } = this.props;
-    const { optionConfigs } = this.state;
+    const { optionConfig } = this.state;
     const { getFieldDecorator } = form;
-    const initialValue = optionConfigs.defaultValue;
+    const initialValue = optionConfig.defaultValue;
     const defaultStyle = { width: '50%' };
     const weekDefaultStyle = { width: '100%' };
     let initialElement = null;
 
-    switch (optionConfigs.type) {
+    switch (optionConfig.type) {
       case 'textArea':
         initialElement = (
           <TextArea
             style={defaultStyle}
             rows={1}
             autosize
-            onBlur={() => { this.onBlurOrChange(optionConfigs); }}
-            {...optionConfigs.customProps}
+            onBlur={() => { this.onBlurOrChange(optionConfig); }}
+            {...optionConfig.customProps}
           />
         );
         break;
@@ -62,8 +62,8 @@ export default class SearchItem extends React.Component {
         initialElement = (
           <InputNumber
             style={defaultStyle}
-            onBlur={() => { this.onBlurOrChange(optionConfigs); }}
-            {...optionConfigs.customProps}
+            onBlur={() => { this.onBlurOrChange(optionConfig); }}
+            {...optionConfig.customProps}
           />
         );
         break;
@@ -72,9 +72,9 @@ export default class SearchItem extends React.Component {
           <Select
             style={defaultStyle}
             onFocus={this.onUpdateOption}
-            onChange={(value) => { this.onBlurOrChange(optionConfigs, value); }}
+            onChange={(value) => { this.onBlurOrChange(optionConfig, value); }}
           >
-            {optionConfigs.selectOptions.map(o => (
+            {optionConfig.selectOptions.map(o => (
               <Option key={o.value} value={o.value}>
                 { o.name }
               </Option>
@@ -86,8 +86,8 @@ export default class SearchItem extends React.Component {
         initialElement = (
           <DatePicker
             style={defaultStyle}
-            onChange={(value) => { this.onBlurOrChange(optionConfigs, value); }}
-            {...optionConfigs.customProps}
+            onChange={(value) => { this.onBlurOrChange(optionConfig, value); }}
+            {...optionConfig.customProps}
           />
         );
         break;
@@ -95,8 +95,8 @@ export default class SearchItem extends React.Component {
         initialElement = (
           <MonthPicker
             style={defaultStyle}
-            onChange={(value) => { this.onBlurOrChange(optionConfigs, value); }}
-            {...optionConfigs.customProps}
+            onChange={(value) => { this.onBlurOrChange(optionConfig, value); }}
+            {...optionConfig.customProps}
           />
         );
         break;
@@ -104,8 +104,8 @@ export default class SearchItem extends React.Component {
         initialElement = (
           <RangePicker
             style={defaultStyle}
-            onChange={(value) => { this.onBlurOrChange(optionConfigs, value); }}
-            {...optionConfigs.customProps}
+            onChange={(value) => { this.onBlurOrChange(optionConfig, value); }}
+            {...optionConfig.customProps}
           />
         );
         break;
@@ -113,8 +113,8 @@ export default class SearchItem extends React.Component {
         initialElement = (
           <WeekPicker
             style={weekDefaultStyle}
-            onChange={(value) => { this.onBlurOrChange(optionConfigs, value); }}
-            {...optionConfigs.customProps}
+            onChange={(value) => { this.onBlurOrChange(optionConfig, value); }}
+            {...optionConfig.customProps}
           />
         );
         break;
@@ -122,17 +122,17 @@ export default class SearchItem extends React.Component {
         initialElement = (
           <TimePicker
             style={defaultStyle}
-            onChange={(value) => { this.onBlurOrChange(optionConfigs, value); }}
-            {...optionConfigs.customProps}
+            onChange={(value) => { this.onBlurOrChange(optionConfig, value); }}
+            {...optionConfig.customProps}
           />
         );
         break;
-      case 'cascader':
+      case 'cascader': //todo...
         initialElement = (
           <Cascader
             style={defaultStyle}
             onChange={onFieldChange}
-            {...optionConfigs.customProps}
+            {...optionConfig.customProps}
           />
         );
         break;
@@ -141,8 +141,8 @@ export default class SearchItem extends React.Component {
         initialElement = (
           <Input
             style={defaultStyle}
-            onBlur={() => { this.onBlurOrChange(optionConfigs); }}
-            {...optionConfigs.customProps}
+            onBlur={() => { this.onBlurOrChange(optionConfig); }}
+            {...optionConfig.customProps}
           />
         );
     }
@@ -150,17 +150,17 @@ export default class SearchItem extends React.Component {
     return (
       <FormItem
         style={{ width: '90%' }}
-        label={optionConfigs.text}
+        label={optionConfig.text}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
       >
         <InputGroup compact>
           <Select
             style={{ width: 108 }}
-            defaultValue={optionConfigs.defaultPredicate}
+            defaultValue={optionConfig.defaultPredicate}
           >
             {
-              optionConfigs.predicates.map(predicate => (
+              optionConfig.predicates.map(predicate => (
                 <Option
                   key={predicate}
                   value={predicate}
@@ -170,7 +170,7 @@ export default class SearchItem extends React.Component {
               ))
             }
           </Select>
-          {getFieldDecorator(optionConfigs.keyword, { initialValue })(initialElement)}
+          {getFieldDecorator(optionConfig.keyword, { initialValue })(initialElement)}
         </InputGroup>
       </FormItem>
     );
