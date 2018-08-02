@@ -15,16 +15,7 @@ export default class TableXSearch extends React.Component {
   constructor(props) {
     super(props);
     this.onSave = this.onSave.bind(this);
-    this.onUpdateOptions = this.onUpdateOptions.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.state = { newSearchOptions: [...props.searchOptions] };
-  }
-
-  state = { a: 'a' };
-
-  componentWillMount() {
-    const { a } = this.state;
-    console.log(a);
   }
 
   onSave() {
@@ -33,13 +24,6 @@ export default class TableXSearch extends React.Component {
       console.log(errors, 'errors');
       console.log(values, 'values');
     });
-  }
-
-  onUpdateOptions() {
-    console.log('focus');
-    const { searchOptions } = this.props;
-    const newSearchOptions = [...searchOptions];
-    this.setState({ newSearchOptions });
   }
 
   handleFieldChange(value) {
@@ -52,8 +36,7 @@ export default class TableXSearch extends React.Component {
   }
 
   render() {
-    const { form } = this.props;
-    const { newSearchOptions } = this.state;
+    const { form, searchOptions } = this.props;
 
     return (
       <Card
@@ -65,16 +48,15 @@ export default class TableXSearch extends React.Component {
           layout="inline"
         >
           <Row>
-            {newSearchOptions.map(option => (
+            {searchOptions.map(option => (
               <Col
                 span={12}
                 key={option.keyword}
               >
                 <SearchItem
                   form={form}
-                  optionConfigs={option}
+                  option={option}
                   onFieldChange={this.handleFieldChange}
-                  onUpdateOptions={this.onUpdateOptions}
                 />
               </Col>
             ))}

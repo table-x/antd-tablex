@@ -12,10 +12,15 @@ const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 export default class SearchItem extends React.Component {
   static propTypes = {
     form: PropTypes.any.isRequired,
-    optionConfigs: PropTypes.any.isRequired,
+    option: PropTypes.any.isRequired,
     onFieldChange: PropTypes.any.isRequired,
-    onUpdateOptions: PropTypes.any.isRequired
   };
+
+  constructor(props) {
+    super(props);
+    this.onUpdateOption = this.onUpdateOption.bind(this);
+    this.state = { optionConfigs: { ...props.option } };
+  }
 
   onBlurOrChange(option, value) {
     const { form, onFieldChange } = this.props;
@@ -26,10 +31,15 @@ export default class SearchItem extends React.Component {
     onFieldChange();
   }
 
+  onUpdateOption() {
+    const { option } = this.props;
+    const optionConfigs = Object.assign({}, option);
+    this.setState({ optionConfigs });
+  }
+
   render() {
-    const {
-      form, optionConfigs, onFieldChange, onUpdateOptions
-    } = this.props;
+    const { form, onFieldChange } = this.props;
+    const { optionConfigs } = this.state;
     const { getFieldDecorator } = form;
     const initialValue = optionConfigs.defaultValue;
     const defaultStyle = { width: '50%' };
@@ -61,7 +71,7 @@ export default class SearchItem extends React.Component {
         initialElement = (
           <Select
             style={defaultStyle}
-            onFocus={onUpdateOptions}
+            onFocus={this.onUpdateOption}
             onChange={(value) => { this.onBlurOrChange(optionConfigs, value); }}
           >
             {optionConfigs.selectOptions.map(o => (
