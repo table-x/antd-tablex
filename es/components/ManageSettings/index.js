@@ -1,0 +1,141 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  Modal, Card, Button
+} from 'antd';
+import ManageSettingSwitch from '../ManageSettingSwitch';
+import ManageSettingConfigs from '../ManageSettingConfigs';
+import ManageSettingColumns from '../ManageSettingColumns';
+
+export default class ManageSettings extends React.Component {
+  static propTypes = {
+    iconType: PropTypes.string.isRequired,
+    useLocal: PropTypes.bool.isRequired,
+    showSearch: PropTypes.bool.isRequired,
+    localConfigs: PropTypes.any.isRequired,
+    localColumns: PropTypes.any.isRequired,
+    resetLocalSettings: PropTypes.func.isRequired
+  };
+
+  constructor(props) {
+    super(props);
+    this.onShow = this.onShow.bind(this);
+    this.onCancel = this.onCancel.bind(this);
+    this.onResetAll = this.onResetAll.bind(this);
+  }
+
+  state = {
+    visible: false,
+    activeTabKey: 'local'
+  };
+
+  onShow() {
+    this.setState({ visible: true });
+  }
+
+  onCancel() {
+    this.setState({ visible: false });
+  }
+
+  onResetAll() {
+    const { resetLocalSettings } = this.props;
+    this.setState({ activeTabKey: 'local' });
+    resetLocalSettings('all', null, false);
+  }
+
+  onTabChange(key) {
+    this.setState({ activeTabKey: key });
+  }
+
+  render() {
+    const {
+      useLocal, showSearch, iconType,
+      localConfigs, localColumns, resetLocalSettings
+    } = this.props;
+    const { visible, activeTabKey } = this.state;
+    const tabBaseList = [
+      {
+        key: 'local',
+        tab: 'Setting Switch'
+      }
+    ];
+    const tabTableList = [
+      {
+        key: 'table',
+        tab: 'Setting Table'
+      },
+      {
+        key: 'columns',
+        tab: 'Setting Columns'
+      }
+    ];
+    const tabSearchList = [
+      {
+        key: 'search',
+        tab: 'Setting Search'
+      }
+    ];
+    let tabList = [];
+    tabList = tabList.concat(tabBaseList);
+    if (useLocal) {
+      tabList = tabList.concat(tabTableList);
+      if (showSearch) {
+        tabList = tabList.concat(tabSearchList);
+      }
+    }
+
+    return (
+      <span style={{ marginLeft: 12 }}>
+        <Button
+          size="small"
+          shape="circle"
+          icon={iconType}
+          onClick={this.onShow}
+        />
+        <Modal
+          title="Setting"
+          visible={visible}
+          okText="Reset All"
+          okType="danger"
+          onCancel={this.onCancel}
+          onOk={this.onResetAll}
+        >
+          <Card
+            bordered={false}
+            bodyStyle={{ padding: '24px 0 0' }}
+            tabList={tabList}
+            activeTabKey={activeTabKey}
+            onTabChange={(key) => { this.onTabChange(key); }}
+          >
+            {activeTabKey === 'local' && (
+              <ManageSettingSwitch
+                useLocal={useLocal}
+                toggleLocalSwitch={resetLocalSettings}
+              />
+            )}
+            {activeTabKey === 'table' && (
+              <ManageSettingConfigs
+                type="table"
+                localConfigs={localConfigs}
+                resetLocalConfigsProps={resetLocalSettings}
+              />
+            )}
+            {activeTabKey === 'columns' && (
+              <ManageSettingColumns
+                localColumns={localColumns}
+                resetLocalColumnsProps={resetLocalSettings}
+              />
+            )}
+            {activeTabKey === 'search' && (
+              <ManageSettingConfigs
+                type="search"
+                localConfigs={localConfigs}
+                resetLocalConfigsProps={resetLocalSettings}
+              />
+            )}
+          </Card>
+        </Modal>
+      </span>
+    );
+  }
+}
