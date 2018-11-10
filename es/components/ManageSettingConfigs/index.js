@@ -7,7 +7,7 @@ import {
   localConfigOfTableKeys,
   localConfigOfSearchKeys
 } from '../../constants';
-import { translateLang } from '../../utils';
+import { translateWords } from '../../utils';
 
 const { Group: RadioGroup, Button: RadioButton } = Radio;
 
@@ -35,7 +35,7 @@ export default class ManageSettingConfigs extends React.Component {
         title: 'key',
         align: 'center',
         dataIndex: 'key',
-        render: (value) => (translateLang(lang, value))
+        render: (value) => (translateWords(lang, value))
       },
       {
         title: 'value',
@@ -70,17 +70,17 @@ export default class ManageSettingConfigs extends React.Component {
                   <RadioButton
                     value="default"
                   >
-                    {translateLang(lang, 'Big(default)')}
+                    {translateWords(lang, 'Big(default)')}
                   </RadioButton>
                   <RadioButton
                     value="middle"
                   >
-                    {translateLang(lang, 'Middle')}
+                    {translateWords(lang, 'Middle')}
                   </RadioButton>
                   <RadioButton
                     value="small"
                   >
-                    {translateLang(lang, 'Small')}
+                    {translateWords(lang, 'Small')}
                   </RadioButton>
                 </RadioGroup>
               );

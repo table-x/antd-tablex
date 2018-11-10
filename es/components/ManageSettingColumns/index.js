@@ -4,7 +4,7 @@ import {
   Table, Switch, Radio
 } from 'antd';
 import { localColumnKeys } from '../../constants';
-import { translateLang } from '../../utils';
+import { translateWords } from '../../utils';
 
 const { Group: RadioGroup, Button: RadioButton } = Radio;
 
@@ -36,12 +36,12 @@ export default class ManageSettingColumns extends React.Component {
     const { lang, localColumns } = this.props;
     const manageColumns = [
       {
-        title: translateLang(lang, 'title'),
+        title: translateWords(lang, 'title'),
         align: 'center',
         dataIndex: 'title'
       },
       {
-        title: translateLang(lang, 'show'),
+        title: translateWords(lang, 'show'),
         align: 'center',
         render: (value, values) => (
           <Switch
@@ -51,7 +51,7 @@ export default class ManageSettingColumns extends React.Component {
         )
       },
       {
-        title: translateLang(lang, 'align'),
+        title: translateWords(lang, 'align'),
         width: 250,
         align: 'center',
         render: (value, values) => (
@@ -62,17 +62,17 @@ export default class ManageSettingColumns extends React.Component {
             <RadioButton
               value="left"
             >
-              {translateLang(lang, 'Left')}
+              {translateWords(lang, 'Left')}
             </RadioButton>
             <RadioButton
               value="center"
             >
-              {translateLang(lang, 'Center')}
+              {translateWords(lang, 'Center')}
             </RadioButton>
             <RadioButton
               value="right"
             >
-              {translateLang(lang, 'Right')}
+              {translateWords(lang, 'Right')}
             </RadioButton>
           </RadioGroup>
         )

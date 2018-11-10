@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Form, Select, Input, InputNumber, DatePicker, TimePicker, Cascader
 } from 'antd';
+import { translatePredicate } from '../../utils';
 
 const { Item: FormItem } = Form;
 const { Group: InputGroup, TextArea } = Input;
@@ -12,6 +13,7 @@ const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 export default class SearchItem extends React.Component {
   static propTypes = {
     form: PropTypes.any.isRequired,
+    lang: PropTypes.string.isRequired,
     option: PropTypes.object.isRequired,
     handleFieldChange: PropTypes.func.isRequired,
     handlePredicateChange: PropTypes.func.isRequired
@@ -38,7 +40,7 @@ export default class SearchItem extends React.Component {
   }
 
   render() {
-    const { form, option, onFieldChange } = this.props;
+    const { form, lang, option, onFieldChange } = this.props;
     const { getFieldDecorator } = form;
     const initialValue = option.defaultValue;
     const defaultStyle = { width: '50%' };
@@ -170,7 +172,7 @@ export default class SearchItem extends React.Component {
                   key={predicate}
                   value={predicate}
                 >
-                  { predicate }
+                  {translatePredicate(lang, predicate)}
                 </Option>
               ))
             }

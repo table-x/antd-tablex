@@ -3,7 +3,7 @@ import merge from 'lodash/merge';
 import filter from 'lodash/filter';
 import isArray from 'lodash/isArray';
 import { defaultPagination, localColumnExtends } from '../constants';
-import language from '../language';
+import { words, predicates } from '../language';
 
 // generate columns
 export const generateFullColumns = (columnsProps, localColumns) => {
@@ -90,13 +90,15 @@ export const generateStateOfSearch = (showSearch, searchOptions, searchRealTime,
   };
 };
 
-export const translateLang = (lang, value) => {
+export const translateWords = (lang, value) => {
   if (!lang || lang === 'enUS') {
     return value;
   }
-  const languageItem = language.filter((l) => (l.enUS === value))[0];
+  const languageItem = words.filter((l) => (l.enUS === value))[0];
   if (languageItem) {
     return languageItem[lang];
   }
   return value;
 };
+
+export const translatePredicate = (lang, value) => (predicates[value][lang]);

@@ -6,7 +6,7 @@ import {
 import ManageSettingSwitch from '../ManageSettingSwitch';
 import ManageSettingConfigs from '../ManageSettingConfigs';
 import ManageSettingColumns from '../ManageSettingColumns';
-import { translateLang } from '../../utils';
+import { translateWords } from '../../utils';
 
 export default class ManageSettings extends React.Component {
   static propTypes = {
@@ -59,23 +59,23 @@ export default class ManageSettings extends React.Component {
     const tabBaseList = [
       {
         key: 'local',
-        tab: translateLang(lang, 'Use Local Settings/Language')
+        tab: translateWords(lang, 'Use Local Settings/Language')
       }
     ];
     const tabTableList = [
       {
         key: 'table',
-        tab: translateLang(lang, 'Setting Table')
+        tab: translateWords(lang, 'Setting Table')
       },
       {
         key: 'columns',
-        tab: translateLang(lang, 'Setting Columns')
+        tab: translateWords(lang, 'Setting Columns')
       }
     ];
     const tabSearchList = [
       {
         key: 'search',
-        tab: translateLang(lang, 'Setting Search')
+        tab: translateWords(lang, 'Setting Search')
       }
     ];
     let tabList = [];
@@ -98,9 +98,9 @@ export default class ManageSettings extends React.Component {
         <Modal
           title="Setting"
           visible={visible}
-          okText={translateLang(lang, 'Reset All')}
+          okText={translateWords(lang, 'Reset All')}
           okType="danger"
-          cancelText={translateLang(lang, 'Cancel')}
+          cancelText={translateWords(lang, 'Cancel')}
           onCancel={this.onCancel}
           onOk={this.onResetAll}
         >

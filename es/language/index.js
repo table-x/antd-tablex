@@ -1,4 +1,4 @@
-export default [
+export const words = [
   {
     enUS: 'Use Local Settings/Language',
     zhCN: '本地配置/语言设置'
@@ -80,3 +80,38 @@ export default [
     zhCN: '小'
   }
 ];
+
+export const predicates = {
+  $eq: {
+    enUS: 'eq',
+    zhCN: '等于'
+  },
+  $neq: {
+    enUS: 'neq',
+    zhCN: '等于'
+  },
+  $lt: {
+    enUS: 'lt',
+    zhCN: '小于'
+  },
+  $lte: {
+    enUS: 'lte',
+    zhCN: '小于等于'
+  },
+  $gt: {
+    enUS: 'gt',
+    zhCN: '大于'
+  },
+  $gte: {
+    enUS: 'gte',
+    zhCN: '大于等于'
+  },
+  $in: {
+    enUS: 'in',
+    zhCN: '包含'
+  },
+  $not_in: {
+    enUS: 'not in',
+    zhCN: '不包含'
+  }
+};

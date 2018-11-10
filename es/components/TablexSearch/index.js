@@ -9,6 +9,7 @@ import SearchItem from '../SearchItem';
 class TablexSearch extends React.Component {
   static propTypes = {
     form: PropTypes.any.isRequired,
+    lang: PropTypes.string.isRequired,
     realTime: PropTypes.bool.isRequired,
     searchOptions: PropTypes.array.isRequired,
     searchItems: PropTypes.array.isRequired,
@@ -64,7 +65,7 @@ class TablexSearch extends React.Component {
   }
 
   render() {
-    const { form, realTime, searchOptions, searchQuery } = this.props;
+    const { form, lang, realTime, searchOptions, searchQuery } = this.props;
     const showClearButton = searchQuery.length > 0;
     const showSearchButton = !realTime;
     const showAllButton = showClearButton && showSearchButton;
@@ -86,6 +87,7 @@ class TablexSearch extends React.Component {
               >
                 <SearchItem
                   form={form}
+                  lang={lang}
                   option={option}
                   handleFieldChange={this.handleFieldChange}
                   handlePredicateChange={this.handlePredicateChange}

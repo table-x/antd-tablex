@@ -304,6 +304,7 @@ export default class TableX extends React.Component {
         <div className="ant-table-x">
           {showSearch && (
             <TablexSearch
+              lang={lang}
               realTime={realTime}
               searchOptions={searchOptions}
               searchItems={searchItems}
