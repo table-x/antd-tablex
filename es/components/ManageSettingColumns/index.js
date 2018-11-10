@@ -4,11 +4,13 @@ import {
   Table, Switch, Radio
 } from 'antd';
 import { localColumnKeys } from '../../constants';
+import { translateLang } from '../../utils';
 
 const { Group: RadioGroup, Button: RadioButton } = Radio;
 
 export default class ManageSettingColumns extends React.Component {
   static propTypes = {
+    lang: PropTypes.string.isRequired,
     localColumns: PropTypes.any.isRequired,
     resetLocalColumnsProps: PropTypes.func.isRequired
   };
@@ -31,15 +33,15 @@ export default class ManageSettingColumns extends React.Component {
   }
 
   render() {
-    const { localColumns } = this.props;
+    const { lang, localColumns } = this.props;
     const manageColumns = [
       {
-        title: 'title',
+        title: translateLang(lang, 'title'),
         align: 'center',
         dataIndex: 'title'
       },
       {
-        title: 'show',
+        title: translateLang(lang, 'show'),
         align: 'center',
         render: (value, values) => (
           <Switch
@@ -49,7 +51,7 @@ export default class ManageSettingColumns extends React.Component {
         )
       },
       {
-        title: 'align',
+        title: translateLang(lang, 'align'),
         width: 250,
         align: 'center',
         render: (value, values) => (
@@ -60,17 +62,17 @@ export default class ManageSettingColumns extends React.Component {
             <RadioButton
               value="left"
             >
-              Left
+              {translateLang(lang, 'Left')}
             </RadioButton>
             <RadioButton
               value="center"
             >
-              Center
+              {translateLang(lang, 'Center')}
             </RadioButton>
             <RadioButton
               value="right"
             >
-              Right
+              {translateLang(lang, 'Right')}
             </RadioButton>
           </RadioGroup>
         )

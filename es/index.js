@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Table } from 'antd';
+import moment from 'moment';
+import { LocaleProvider, Card, Table } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
+import 'moment/locale/zh-cn';
 import { LocalForage, LocalStorage } from './services';
 import {
   generateStateOfColumns,
   generateStateOfPagination,
-  generateStateOfSearch
+  generateStateOfSearch,
+  generateSearchQuery
 } from './utils';
 import TablexSearch from './components/TablexSearch';
 import TablexError from './components/TablexError';
@@ -33,7 +37,8 @@ export default class TableX extends React.Component {
     searchRealTime: PropTypes.bool,
     loading: PropTypes.bool,
     onChange: PropTypes.func,
-    errorMessage: PropTypes.string
+    errorMessage: PropTypes.string,
+    locale: PropTypes.string
   };
 
   static defaultProps = {
@@ -50,7 +55,8 @@ export default class TableX extends React.Component {
     searchRealTime: true,
     loading: false,
     onChange: noop,
-    errorMessage: ''
+    errorMessage: '',
+    locale: 'enUS'
   };
 
   constructor(props) {
@@ -58,6 +64,7 @@ export default class TableX extends React.Component {
     this.onTableChange = this.onTableChange.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onFetchData = this.onFetchData.bind(this);
+    this.resetLang = this.resetLang.bind(this);
     this.resetLocalSettings = this.resetLocalSettings.bind(this);
   }
 
@@ -68,10 +75,11 @@ export default class TableX extends React.Component {
     filterColumns: [],
     localColumns: [],
     pagination: false,
-    searchOpts: [],
+    searchItems: [],
     searchQuery: [],
     realTime: true,
-    localConfigs: {}
+    localConfigs: {},
+    lang: 'enUS'
   };
 
   componentWillMount() {
@@ -84,18 +92,18 @@ export default class TableX extends React.Component {
 
   componentWillReceiveProps() {
     const { columns, fullColumns } = this.state;
-    console.log(columns, fullColumns);
+    console.log(columns, fullColumns, 'en_US');
   }
 
   onInitWithoutLocal() {
     const {
       columns, showPagination, paginationTotal,
-      showSearch, searchOptions, searchRealTime
+      showSearch, searchOptions, searchRealTime, locale
     } = this.props;
 
     const { fullColumns, filterColumns, localColumns } = generateStateOfColumns(columns);
     const { pagination } = generateStateOfPagination(showPagination, paginationTotal);
-    const { searchOpts, searchQuery, realTime } = generateStateOfSearch(showSearch, searchOptions, searchRealTime);
+    const { searchItems, searchQuery, realTime } = generateStateOfSearch(showSearch, searchOptions, searchRealTime);
     const localConfigs = { ...defaultLocalConfigs };
 
     this.setState({
@@ -104,20 +112,23 @@ export default class TableX extends React.Component {
       filterColumns,
       localColumns,
       pagination,
-      searchOpts,
+      searchItems,
       searchQuery,
       realTime,
-      localConfigs
+      localConfigs,
+      lang: locale
     });
   }
 
   onInitLocal() {
     const {
       name, columns, showPagination, paginationTotal,
-      showSearch, searchOptions, searchRealTime
+      showSearch, searchOptions, searchRealTime, locale
     } = this.props;
     this.storageService = new LocalStorage();
     const useLocal = Boolean(this.storageService.get(`tablex-${name}`));
+    const lang = this.storageService.get(`tablexLanguage`) || locale;
+    this.onLangChange(lang);
     this.dbOfColumns = new LocalForage('antd_tablex_columns_storage');
     this.dbOfConfigs = new LocalForage('antd_tablex_configs_storage');
     if (useLocal) {
@@ -128,7 +139,7 @@ export default class TableX extends React.Component {
         .then(([preLocalColumns, preLocalConfigs]) => {
           const { fullColumns, filterColumns, localColumns } = generateStateOfColumns(columns, preLocalColumns);
           const { pagination } = generateStateOfPagination(showPagination, paginationTotal, preLocalConfigs);
-          const { searchOpts, searchQuery, realTime } = generateStateOfSearch(showSearch, searchOptions, searchRealTime);
+          const { searchItems, searchQuery, realTime } = generateStateOfSearch(showSearch, searchOptions, searchRealTime);
           const localConfigs = preLocalConfigs || { ...defaultLocalConfigs };
           this.setState({
             useLocal,
@@ -136,7 +147,7 @@ export default class TableX extends React.Component {
             filterColumns,
             localColumns,
             pagination,
-            searchOpts,
+            searchItems,
             searchQuery,
             realTime,
             localConfigs
@@ -146,23 +157,30 @@ export default class TableX extends React.Component {
   }
 
   onTableChange(pagination, filters, sorter, extra) {
-    console.log(pagination, filters, sorter, extra);
     const { onChange } = this.props;
-    const { searchOpts } = this.state;
+    const { searchItems } = this.state;
     this.setState({ pagination, filters, sorter, extra }, () => {
-      onChange(searchOpts, pagination, filters, sorter, extra);
+      onChange(searchItems, pagination, filters, sorter, extra);
     });
   }
 
-  onSearchChange() {
-    const { onChange } = this.props;
-    const { searchQuery, pagination: oldPagination } = this.state;
-    const pagination = {
-      pageSize: 1,
-      ...oldPagination
-    };
-    this.setState({ pagination}, () => {
-      onChange(searchQuery, pagination);
+  onSearchChange(newSearchItems, clickSearchButton=false) {
+    const { onChange, showPagination } = this.props;
+    const { realTime, pagination: oldPagination } = this.state;
+    const searchQuery = generateSearchQuery(newSearchItems);
+    this.setState({ searchItems: newSearchItems, searchQuery }, () => {
+      if (realTime || clickSearchButton) {
+        let pagination = null;
+        if (showPagination) {
+          pagination = {
+            pageSize: 1,
+            ...oldPagination
+          };
+        }
+        this.setState({ pagination }, () => {
+          onChange(searchQuery, pagination);
+        });
+      }
     });
   }
 
@@ -172,9 +190,34 @@ export default class TableX extends React.Component {
     onChange(searchQuery, pagination, filters, sorter, extra);
   }
 
+  onLangChange(lang) {
+    this.setState({ lang }, () => {
+      switch (lang) {
+        case 'enUS':
+          moment.locale('en');
+          break;
+        case 'zhCN':
+          moment.locale('zh-cn');
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
   toggleLocalSwitch() {
     const { useLocal } = this.state;
     this.setState({ useLocal: !useLocal });
+  }
+
+  resetLang(lang) {
+    if (!lang || lang === 'enUS') {
+      this.storageService.remove('tablexLanguage');
+    } else {
+      this.storageService.set('tablexLanguage', lang);
+    }
+
+    this.onLangChange(lang);
   }
 
   resetLocalSettings(type, values, useLocal) {
@@ -226,15 +269,16 @@ export default class TableX extends React.Component {
   render() {
     const {
       dataSource, tableRowKey, tableTitle, tableProps: tableOtherProps,
-      showSearch, loading, errorMessage
+      showSearch, searchOptions, loading, errorMessage
     } = this.props;
     const {
       useLocal, filterColumns, localColumns, pagination, localConfigs,
-      searchOpts, searchQuery, realTime
+      searchItems, searchQuery, realTime, lang
     } = this.state;
 
     const { bordered, size } = localConfigs;
     const rowKey = (tableRowKey === noop) ? (t => (t[filterColumns[0].dataIndex])) : tableRowKey;
+    const language = lang === 'enUS' ? undefined : zhCN;
 
     const manager = (
       <div>
@@ -244,47 +288,52 @@ export default class TableX extends React.Component {
         />
         <ManageSettings
           iconType="setting"
+          lang={lang}
           useLocal={useLocal}
           showSearch={showSearch}
           localConfigs={localConfigs}
           localColumns={localColumns}
+          resetLang={this.resetLang}
           resetLocalSettings={this.resetLocalSettings}
         />
       </div>
     );
 
     return (
-      <div className="ant-table-x">
-        {showSearch && (
-          <TablexSearch
-            realTime={realTime}
-            searchOptions={searchOpts}
-            searchQuery={searchQuery}
-            onChange={this.onSearchChange}
+      <LocaleProvider locale={language}>
+        <div className="ant-table-x">
+          {showSearch && (
+            <TablexSearch
+              realTime={realTime}
+              searchOptions={searchOptions}
+              searchItems={searchItems}
+              searchQuery={searchQuery}
+              onChange={this.onSearchChange}
+            />
+          )}
+          <TablexError
+            errorMessage={errorMessage}
+            handleClick={this.onFetchData}
           />
-        )}
-        <TablexError
-          errorMessage={errorMessage}
-          handleClick={this.onFetchData}
-        />
-        <Card
-          title={tableTitle}
-          extra={manager}
-          bodyStyle={{ padding: 0 }}
-        >
-          <Table
-            dataSource={dataSource}
-            columns={filterColumns}
-            pagination={pagination}
-            loading={loading}
-            rowKey={rowKey}
-            onChange={this.onTableChange}
-            bordered={bordered}
-            size={size}
-            {...tableOtherProps}
-          />
-        </Card>
-      </div>
+          <Card
+            title={tableTitle}
+            extra={manager}
+            bodyStyle={{ padding: 0 }}
+          >
+            <Table
+              dataSource={dataSource}
+              columns={filterColumns}
+              pagination={pagination}
+              loading={loading}
+              rowKey={rowKey}
+              onChange={this.onTableChange}
+              bordered={bordered}
+              size={size}
+              {...tableOtherProps}
+            />
+          </Card>
+        </div>
+      </LocaleProvider>
     );
   }
 }

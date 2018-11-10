@@ -6,14 +6,17 @@ import {
 import ManageSettingSwitch from '../ManageSettingSwitch';
 import ManageSettingConfigs from '../ManageSettingConfigs';
 import ManageSettingColumns from '../ManageSettingColumns';
+import { translateLang } from '../../utils';
 
 export default class ManageSettings extends React.Component {
   static propTypes = {
     iconType: PropTypes.string.isRequired,
+    lang: PropTypes.string.isRequired,
     useLocal: PropTypes.bool.isRequired,
     showSearch: PropTypes.bool.isRequired,
     localConfigs: PropTypes.any.isRequired,
     localColumns: PropTypes.any.isRequired,
+    resetLang: PropTypes.func.isRequired,
     resetLocalSettings: PropTypes.func.isRequired
   };
 
@@ -49,30 +52,30 @@ export default class ManageSettings extends React.Component {
 
   render() {
     const {
-      useLocal, showSearch, iconType,
-      localConfigs, localColumns, resetLocalSettings
+      lang, useLocal, showSearch, iconType,
+      localConfigs, localColumns, resetLang, resetLocalSettings
     } = this.props;
     const { visible, activeTabKey } = this.state;
     const tabBaseList = [
       {
         key: 'local',
-        tab: 'Setting Switch'
+        tab: translateLang(lang, 'Use Local Settings/Language')
       }
     ];
     const tabTableList = [
       {
         key: 'table',
-        tab: 'Setting Table'
+        tab: translateLang(lang, 'Setting Table')
       },
       {
         key: 'columns',
-        tab: 'Setting Columns'
+        tab: translateLang(lang, 'Setting Columns')
       }
     ];
     const tabSearchList = [
       {
         key: 'search',
-        tab: 'Setting Search'
+        tab: translateLang(lang, 'Setting Search')
       }
     ];
     let tabList = [];
@@ -95,8 +98,9 @@ export default class ManageSettings extends React.Component {
         <Modal
           title="Setting"
           visible={visible}
-          okText="Reset All"
+          okText={translateLang(lang, 'Reset All')}
           okType="danger"
+          cancelText={translateLang(lang, 'Cancel')}
           onCancel={this.onCancel}
           onOk={this.onResetAll}
         >
@@ -109,19 +113,23 @@ export default class ManageSettings extends React.Component {
           >
             {activeTabKey === 'local' && (
               <ManageSettingSwitch
+                lang={lang}
                 useLocal={useLocal}
+                resetLang={resetLang}
                 toggleLocalSwitch={resetLocalSettings}
               />
             )}
             {activeTabKey === 'table' && (
               <ManageSettingConfigs
                 type="table"
+                lang={lang}
                 localConfigs={localConfigs}
                 resetLocalConfigsProps={resetLocalSettings}
               />
             )}
             {activeTabKey === 'columns' && (
               <ManageSettingColumns
+                lang={lang}
                 localColumns={localColumns}
                 resetLocalColumnsProps={resetLocalSettings}
               />
@@ -129,6 +137,7 @@ export default class ManageSettings extends React.Component {
             {activeTabKey === 'search' && (
               <ManageSettingConfigs
                 type="search"
+                lang={lang}
                 localConfigs={localConfigs}
                 resetLocalConfigsProps={resetLocalSettings}
               />

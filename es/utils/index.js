@@ -2,8 +2,8 @@ import pick from 'lodash/pick';
 import merge from 'lodash/merge';
 import filter from 'lodash/filter';
 import isArray from 'lodash/isArray';
-import cloneDeep from 'lodash/cloneDeep';
 import { defaultPagination, localColumnExtends } from '../constants';
+import language from '../language';
 
 // generate columns
 export const generateFullColumns = (columnsProps, localColumns) => {
@@ -25,12 +25,16 @@ export const generateLocalColumnsByFull = (fullColumns) => (
 );
 
 // generate search
-export const generateSearchQuery = searchOpts => (
-  searchOpts.map(option => ({
+export const generateSearchItems = searchOptions => (
+  searchOptions.map(option => ({
     keyword: option.keyword,
     predicate: option.defaultPredicate,
     value: option.defaultValue
   }))
+);
+
+export const generateSearchQuery = searchItems => (
+  searchItems.filter(option => (option.value))
 );
 
 // generate state
@@ -68,7 +72,7 @@ export const generateStateOfPagination = (showPagination, paginationTotal, preLo
 };
 
 export const generateStateOfSearch = (showSearch, searchOptions, searchRealTime, preLocalConfigs) => {
-  const searchOpts = cloneDeep(searchOptions);
+  const searchItems = generateSearchItems(searchOptions);
   let realTime = true;
   let searchQuery = [];
   if (showSearch) {
@@ -77,15 +81,22 @@ export const generateStateOfSearch = (showSearch, searchOptions, searchRealTime,
     } else {
       realTime = searchRealTime;
     }
-    searchQuery = generateSearchQuery(searchOpts);
+    searchQuery = generateSearchQuery(searchItems);
   }
   return {
-    searchOpts,
+    searchItems,
     searchQuery,
     realTime
   };
 };
 
-
-
-
+export const translateLang = (lang, value) => {
+  if (!lang || lang === 'enUS') {
+    return value;
+  }
+  const languageItem = language.filter((l) => (l.enUS === value))[0];
+  if (languageItem) {
+    return languageItem[lang];
+  }
+  return value;
+};

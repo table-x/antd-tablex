@@ -7,12 +7,14 @@ import {
   localConfigOfTableKeys,
   localConfigOfSearchKeys
 } from '../../constants';
+import { translateLang } from '../../utils';
 
 const { Group: RadioGroup, Button: RadioButton } = Radio;
 
 export default class ManageSettingConfigs extends React.Component {
   static propTypes = {
     type: PropTypes.string.isRequired,
+    lang: PropTypes.string.isRequired,
     localConfigs: PropTypes.object.isRequired,
     resetLocalConfigsProps: PropTypes.func.isRequired
   };
@@ -27,12 +29,13 @@ export default class ManageSettingConfigs extends React.Component {
   }
 
   render() {
-    const { type, localConfigs } = this.props;
+    const { type, lang, localConfigs } = this.props;
     const manageTable = [
       {
         title: 'key',
         align: 'center',
-        dataIndex: 'key'
+        dataIndex: 'key',
+        render: (value) => (translateLang(lang, value))
       },
       {
         title: 'value',
@@ -67,17 +70,17 @@ export default class ManageSettingConfigs extends React.Component {
                   <RadioButton
                     value="default"
                   >
-                    Default
+                    {translateLang(lang, 'Big(default)')}
                   </RadioButton>
                   <RadioButton
                     value="middle"
                   >
-                    Middle
+                    {translateLang(lang, 'Middle')}
                   </RadioButton>
                   <RadioButton
                     value="small"
                   >
-                    Small
+                    {translateLang(lang, 'Small')}
                   </RadioButton>
                 </RadioGroup>
               );

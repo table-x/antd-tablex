@@ -6,12 +6,12 @@ import {
 } from 'antd';
 import SearchItem from '../SearchItem';
 
-@Form.create()
-export default class TablexSearch extends React.Component {
+class TablexSearch extends React.Component {
   static propTypes = {
     form: PropTypes.any.isRequired,
     realTime: PropTypes.bool.isRequired,
     searchOptions: PropTypes.array.isRequired,
+    searchItems: PropTypes.array.isRequired,
     searchQuery: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired
   };
@@ -20,6 +20,7 @@ export default class TablexSearch extends React.Component {
     super(props);
     this.onClickClearButton = this.onClickClearButton.bind(this);
     this.onClickSearchButton = this.onClickSearchButton.bind(this);
+    this.handlePredicateChange = this.handlePredicateChange.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
@@ -35,23 +36,35 @@ export default class TablexSearch extends React.Component {
 
   handleFieldChange(clickSearchButton) {
     const {
-      form, realTime, searchOptions, onChange
+      form, realTime, searchItems, onChange
     } = this.props;
     if (realTime || clickSearchButton) {
       form.validateFields((errors, values) => {
-        const newSearchOptions = searchOptions.map(item => ({
+        const newSearchItems = searchItems.map(item => ({
           ...item,
           value: get(values, item.keyword)
         }));
-        onChange(newSearchOptions);
+        onChange(newSearchItems, clickSearchButton);
       });
     }
   }
 
+  handlePredicateChange(keyword, value) {
+    const { searchItems, onChange } = this.props;
+    const newSearchItems = searchItems.map(item => {
+      if (item.keyword !== keyword) {
+        return item;
+      }
+      return {
+        ...item,
+        predicate: value
+      };
+    });
+    onChange(newSearchItems);
+  }
+
   render() {
-    const {
-      form, realTime, searchOptions, searchQuery
-    } = this.props;
+    const { form, realTime, searchOptions, searchQuery } = this.props;
     const showClearButton = searchQuery.length > 0;
     const showSearchButton = !realTime;
     const showAllButton = showClearButton && showSearchButton;
@@ -74,7 +87,8 @@ export default class TablexSearch extends React.Component {
                 <SearchItem
                   form={form}
                   option={option}
-                  onFieldChange={this.handleFieldChange}
+                  handleFieldChange={this.handleFieldChange}
+                  handlePredicateChange={this.handlePredicateChange}
                 />
               </Col>
             ))}
@@ -106,3 +120,5 @@ export default class TablexSearch extends React.Component {
     );
   }
 }
+
+export default Form.create()(TablexSearch);
