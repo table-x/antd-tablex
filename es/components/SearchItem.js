@@ -83,7 +83,7 @@ export default class SearchItem extends React.Component {
       case 'select': {
         let selectOptions = [];
         if (option.customProps && option.customProps.selectOptions) {
-          ({ selectOptions } = option.customProps.selectOptions);
+          ({ selectOptions } = option.customProps);
         }
         initialElement = (
           <Select
