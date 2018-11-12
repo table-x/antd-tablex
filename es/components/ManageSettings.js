@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import {
   Modal, Card, Button
 } from 'antd';
-import ManageSettingSwitch from '../ManageSettingSwitch';
-import ManageSettingConfigs from '../ManageSettingConfigs';
-import ManageSettingColumns from '../ManageSettingColumns';
-import { translateWords } from '../../utils';
+import ManageSettingSwitch from './ManageSettingSwitch';
+import ManageSettingConfigs from './ManageSettingConfigs';
+import ManageSettingColumns from './ManageSettingColumns';
+import { translateWords } from '../utils';
 
 export default class ManageSettings extends React.Component {
   static propTypes = {

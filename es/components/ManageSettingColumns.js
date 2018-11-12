@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {
   Table, Switch, Radio
 } from 'antd';
-import { localColumnKeys } from '../../constants';
-import { translateWords } from '../../utils';
+import { localColumnKeys } from '../constants';
+import { translateWords } from '../utils';
 
 const { Group: RadioGroup, Button: RadioButton } = Radio;
 

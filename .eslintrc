@@ -1,0 +1,36 @@
+{
+  "parser": "babel-eslint",
+  "plugins": ["react", "jsx-a11y", "import"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "legacyDecorators": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "amd": true,
+    "es6": true,
+    "node": true,
+    "mocha": true
+  },
+  "extends": [
+    "airbnb"
+  ],
+  "globals": {
+    "window": true,
+    "document": true
+  },
+  "rules": {
+    "no-console": [1],
+    "semi": [2, "always"],
+    "comma-dangle": [2, "never"],
+    "react/forbid-prop-types": [0],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".md"] }],
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "max-len": [0]
+  }
+}

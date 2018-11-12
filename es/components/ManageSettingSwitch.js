@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Switch, Radio } from 'antd';
-import { translateWords } from '../../utils';
+import { translateWords } from '../utils';
 
 const { Group: RadioGroup, Button: RadioButton } = Radio;
 
@@ -30,7 +30,7 @@ export default class ManageSettingSwitch extends React.Component {
         title: 'key',
         align: 'center',
         dataIndex: 'key',
-        render: (value) => (translateWords(lang, value))
+        render: value => (translateWords(lang, value))
       },
       {
         title: 'value',

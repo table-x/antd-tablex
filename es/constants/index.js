@@ -1,3 +1,9 @@
+export const defaultLocalLangKey = 'tablexLanguage';
+
+export const defaultColumnsKeyOfDB = 'antd_tablex_columns_storage';
+
+export const defaultConfigsKeyOfDB = 'antd_tablex_configs_storage';
+
 export const defaultLocalConfigs = {
   pageSize: 50,
   realTime: true,
@@ -11,7 +17,7 @@ export const defaultPagination = {
   pageSizeOptions: ['10', '20', '50', '100'],
   showSizeChanger: true,
   showQuickJumper: true,
-  showTotal: total => `共 ${total} 条` //todo
+  showTotal: total => `Total ${total}  ` // todo... language
 };
 
 export const localColumnExtends = {

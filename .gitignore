@@ -9,7 +9,6 @@
 *.bak
 .DS_Store
 Thumbs.db
-.project
 .*proj
 .svn/
 *.swp
@@ -24,16 +23,12 @@ npm-debug.log
 nohup.out
 _site
 _data
-dist
-/lib
 elasticsearch-*
 config/base.yaml
 /.vscode/
 /coverage
 yarn.lock
 package-lock.json
-components/**/*.js
-components/**/*.jsx
 !components/**/__tests__/*.js
 !components/**/__tests__/*.js.snap
 /.history

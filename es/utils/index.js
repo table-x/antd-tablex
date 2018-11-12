@@ -2,8 +2,8 @@ import pick from 'lodash/pick';
 import merge from 'lodash/merge';
 import filter from 'lodash/filter';
 import isArray from 'lodash/isArray';
+import language from '../language';
 import { defaultPagination, localColumnExtends } from '../constants';
-import { words, predicates } from '../language';
 
 // generate columns
 export const generateFullColumns = (columnsProps, localColumns) => {
@@ -20,7 +20,7 @@ export const generateFilterColumnsByFull = fullColumns => (
   fullColumns.filter(item => (item.show))
 );
 
-export const generateLocalColumnsByFull = (fullColumns) => (
+export const generateLocalColumnsByFull = fullColumns => (
   fullColumns.map(item => (pick(item, ['title', 'show', 'align'])))
 );
 
@@ -76,7 +76,7 @@ export const generateStateOfSearch = (showSearch, searchOptions, searchRealTime,
   let realTime = true;
   let searchQuery = [];
   if (showSearch) {
-    if (preLocalConfigs && preLocalConfigs.realTime === 'false') {
+    if (preLocalConfigs && !preLocalConfigs.realTime) {
       realTime = false;
     } else {
       realTime = searchRealTime;
@@ -91,14 +91,15 @@ export const generateStateOfSearch = (showSearch, searchOptions, searchRealTime,
 };
 
 export const translateWords = (lang, value) => {
-  if (!lang || lang === 'enUS') {
-    return value;
+  let theLang = 'enUS';
+  if (lang) {
+    theLang = lang;
   }
-  const languageItem = words.filter((l) => (l.enUS === value))[0];
+  const languageItem = language.filter(
+    l => ((l.enUS === value) || (l.value === value))
+  )[0];
   if (languageItem) {
-    return languageItem[lang];
+    return languageItem[theLang];
   }
   return value;
 };
-
-export const translatePredicate = (lang, value) => (predicates[value][lang]);

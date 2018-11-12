@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import get from 'lodash/get';
 import {
   Form, Card, Row, Col, Button
 } from 'antd';
-import SearchItem from '../SearchItem';
+import SearchItem from './SearchItem';
 
 class TablexSearch extends React.Component {
   static propTypes = {
@@ -41,10 +42,16 @@ class TablexSearch extends React.Component {
     } = this.props;
     if (realTime || clickSearchButton) {
       form.validateFields((errors, values) => {
-        const newSearchItems = searchItems.map(item => ({
-          ...item,
-          value: get(values, item.keyword)
-        }));
+        const newSearchItems = searchItems.map((item) => {
+          let value = get(values, item.keyword);
+          if (Boolean(value) && (typeof value === 'object')) {
+            value = moment(value).format('YYYY-MM-DD HH:mm:ss');
+          }
+          return {
+            ...item,
+            value
+          };
+        });
         onChange(newSearchItems, clickSearchButton);
       });
     }
@@ -52,7 +59,7 @@ class TablexSearch extends React.Component {
 
   handlePredicateChange(keyword, value) {
     const { searchItems, onChange } = this.props;
-    const newSearchItems = searchItems.map(item => {
+    const newSearchItems = searchItems.map((item) => {
       if (item.keyword !== keyword) {
         return item;
       }
@@ -65,7 +72,9 @@ class TablexSearch extends React.Component {
   }
 
   render() {
-    const { form, lang, realTime, searchOptions, searchQuery } = this.props;
+    const {
+      form, lang, realTime, searchOptions, searchQuery
+    } = this.props;
     const showClearButton = searchQuery.length > 0;
     const showSearchButton = !realTime;
     const showAllButton = showClearButton && showSearchButton;

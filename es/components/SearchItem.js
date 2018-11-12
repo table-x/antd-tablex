@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import {
-  Form, Select, Input, InputNumber, DatePicker, TimePicker, Cascader
+  Form, Select, Input, InputNumber, DatePicker
 } from 'antd';
-import { translatePredicate } from '../../utils';
+import { translateWords } from '../utils';
 
 const { Item: FormItem } = Form;
 const { Group: InputGroup, TextArea } = Input;
 const { Option } = Select;
-const { MonthPicker, RangePicker, WeekPicker } = DatePicker;
 
 export default class SearchItem extends React.Component {
   static propTypes = {
@@ -32,21 +32,34 @@ export default class SearchItem extends React.Component {
 
   onBlurOrChange(option, value) {
     const { form, handleFieldChange } = this.props;
-    const changeEventElements = ['date', 'month', 'range', 'week', 'time', 'select'];
-    if (changeEventElements.includes(option.type)) {
-      form.setFieldsValue({ [option.keyword]: value });
+    // todo...const types = ['date', 'month', 'range', 'week', 'time', 'select'];
+    if (value) {
+      if (typeof value === 'object') {
+        form.setFieldsValue({ [option.keyword]: moment(value).format('YYYY-MM-DD HH:mm:ss') });
+      } else {
+        form.setFieldsValue({ [option.keyword]: value });
+      }
     }
     handleFieldChange();
   }
 
   render() {
-    const { form, lang, option, onFieldChange } = this.props;
+    const { form, lang, option } = this.props;
     const { getFieldDecorator } = form;
     const initialValue = option.defaultValue;
     const defaultStyle = { width: '50%' };
 
     let initialElement = null;
     switch (option.type) {
+      case 'text':
+        initialElement = (
+          <Input
+            style={defaultStyle}
+            onBlur={() => { this.onBlurOrChange(option); }}
+            {...option.customProps}
+          />
+        );
+        break;
       case 'textArea':
         initialElement = (
           <TextArea
@@ -70,7 +83,7 @@ export default class SearchItem extends React.Component {
       case 'select': {
         let selectOptions = [];
         if (option.customProps && option.customProps.selectOptions) {
-          selectOptions = option.customProps.selectOptions;
+          ({ selectOptions } = option.customProps.selectOptions);
         }
         initialElement = (
           <Select
@@ -92,65 +105,14 @@ export default class SearchItem extends React.Component {
         initialElement = (
           <DatePicker
             style={defaultStyle}
+            format="YYYY-MM-DD HH:mm:ss"
             onChange={(value) => { this.onBlurOrChange(option, value); }}
             {...option.customProps}
           />
         );
         break;
-      case 'month':
-        initialElement = (
-          <MonthPicker
-            style={defaultStyle}
-            onChange={(value) => { this.onBlurOrChange(option, value); }}
-            {...option.customProps}
-          />
-        );
-        break;
-      case 'range':
-        initialElement = (
-          <RangePicker
-            style={defaultStyle}
-            onChange={(value) => { this.onBlurOrChange(option, value); }}
-            {...option.customProps}
-          />
-        );
-        break;
-      case 'week':
-        initialElement = (
-          <WeekPicker
-            style={defaultStyle}
-            onChange={(value) => { this.onBlurOrChange(option, value); }}
-            {...option.customProps}
-          />
-        );
-        break;
-      case 'time':
-        initialElement = (
-          <TimePicker
-            style={defaultStyle}
-            onChange={(value) => { this.onBlurOrChange(option, value); }}
-            {...option.customProps}
-          />
-        );
-        break;
-      case 'cascader': //todo...
-        initialElement = (
-          <Cascader
-            style={defaultStyle}
-            onChange={onFieldChange}
-            {...option.customProps}
-          />
-        );
-        break;
-      case 'text':
       default:
-        initialElement = (
-          <Input
-            style={defaultStyle}
-            onBlur={() => { this.onBlurOrChange(option); }}
-            {...option.customProps}
-          />
-        );
+        break;
     }
 
     return (
@@ -172,7 +134,7 @@ export default class SearchItem extends React.Component {
                   key={predicate}
                   value={predicate}
                 >
-                  {translatePredicate(lang, predicate)}
+                  {translateWords(lang, predicate)}
                 </Option>
               ))
             }

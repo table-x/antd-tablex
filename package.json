@@ -2,10 +2,6 @@
   "name": "antd-tablex",
   "version": "0.8.0",
   "description": "An powerful table and antd-based implementation",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mzonghao/antd-tablex.git"
@@ -23,12 +19,32 @@
     "url": "https://github.com/mzonghao/antd-tablex/issues"
   },
   "homepage": "https://github.com/mzonghao/antd-tablex#readme",
+  "main": "es/index.js",
+  "module": "es/index.js",
+  "pre-commit": [
+    "lint"
+  ],
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint es/*",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
-    "antd": "^3.6.3",
-    "localforage": "^1.7.2",
-    "lodash": "^4.17.10",
+    "antd": "^3.10.4",
+    "localforage": "^1.7.3",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.11.1",
+    "pre-commit": "^1.2.2"
   }
 }

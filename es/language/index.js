@@ -1,4 +1,4 @@
-export const words = [
+export default [
   {
     enUS: 'Use Local Settings/Language',
     zhCN: '本地配置/语言设置'
@@ -78,40 +78,58 @@ export const words = [
   {
     enUS: 'Small',
     zhCN: '小'
-  }
-];
-
-export const predicates = {
-  $eq: {
+  },
+  {
+    enUs: ''
+  },
+  {
+    value: '$eq',
     enUS: 'eq',
     zhCN: '等于'
   },
-  $neq: {
+  {
+    value: '$ne',
     enUS: 'neq',
-    zhCN: '等于'
+    zhCN: '不等于'
   },
-  $lt: {
+  {
+    value: '$lt',
     enUS: 'lt',
     zhCN: '小于'
   },
-  $lte: {
+  {
+    value: '$lte',
     enUS: 'lte',
     zhCN: '小于等于'
   },
-  $gt: {
+  {
+    value: '$gt',
     enUS: 'gt',
     zhCN: '大于'
   },
-  $gte: {
+  {
+    value: '$gte',
     enUS: 'gte',
     zhCN: '大于等于'
   },
-  $in: {
+  {
+    value: '$in',
     enUS: 'in',
     zhCN: '包含'
   },
-  $not_in: {
+  {
+    value: '$notIn',
     enUS: 'not in',
     zhCN: '不包含'
+  },
+  {
+    value: '$like',
+    enUS: 'like',
+    zhCN: '相似'
+  },
+  {
+    value: '$notLike',
+    enUS: 'not like',
+    zhCN: '不相似'
   }
-};
+];
