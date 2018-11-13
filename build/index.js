@@ -27,9 +27,7 @@ function generateConfig(type) {
       ],
       plugins: [
         peerDepsExternal(),
-        postcss({
-          modules: true
-        }),
+        postcss(),
         resolve(),
         babel({
           runtimeHelpers: true,
