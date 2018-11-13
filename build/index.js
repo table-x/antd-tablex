@@ -11,7 +11,7 @@ async function build(option) {
 }
 
 function generateConfig(type) {
-  const inputName = './src/index.js';
+  const inputName = `./src/index.${type}.js`;
   const outputName = `./${type}/index.js`;
   return {
     input: {
