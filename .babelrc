@@ -10,6 +10,9 @@
     "react"
   ],
   "plugins": [
+    "transform-runtime",
+    ["import", { "libraryName": "antd", "style": true }],
+    "lodash",
     "external-helpers"
   ]
 }

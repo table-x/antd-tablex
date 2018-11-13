@@ -32,6 +32,7 @@ function generateConfig(type) {
         }),
         resolve(),
         babel({
+          runtimeHelpers: true,
           exclude: 'node_modules/**'
         }),
         commonjs()
@@ -42,6 +43,8 @@ function generateConfig(type) {
       format: type,
       sourcemap: true,
       globals: {
+        react: 'react',
+        antd: 'antd',
         window: 'window',
         document: 'document'
       }
