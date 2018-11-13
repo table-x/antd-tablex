@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert } from 'antd';
 
-
 const TablexError = ({ errorMessage, handleClick }) => {
   if (!errorMessage) {
     return null;
