@@ -1,3 +1,3 @@
-TableX
+antd-tablex
 antd-based
 developing...

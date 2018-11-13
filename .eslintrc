@@ -27,6 +27,8 @@
     "no-console": [1],
     "semi": [2, "always"],
     "comma-dangle": [2, "never"],
+    "import/no-unresolved": [0],
+    "import/no-extraneous-dependencies": [0],
     "react/forbid-prop-types": [0],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".md"] }],
     "jsx-a11y/click-events-have-key-events": 0,
