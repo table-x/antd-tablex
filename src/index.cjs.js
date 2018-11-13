@@ -11,7 +11,7 @@ import 'antd/lib/select/style/index.css';
 import 'antd/lib/input/style/index.css';
 import 'antd/lib/input-number/style/index.css';
 import 'antd/lib/date-picker/style/index.css';
-import 'antd/lib/row/style/index.css';
-import 'antd/lib/col/style/index.css';
+import 'antd/lib/row/style/css';
+import 'antd/lib/col/style/css';
 
 export { default } from './index';
