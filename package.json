@@ -19,8 +19,8 @@
     "url": "https://github.com/mzonghao/antd-tablex/issues"
   },
   "homepage": "https://github.com/mzonghao/antd-tablex#readme",
-  "main": "cjs/index.js",
-  "module": "es/index.js",
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.es.js",
   "pre-commit": [
     "lint"
   ],
