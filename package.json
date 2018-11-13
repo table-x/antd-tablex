@@ -26,6 +26,7 @@
   ],
   "scripts": {
     "build": "node build",
+    "publish:patch": "npm version patch && npm publish",
     "compile": "./node_modules/.bin/babel src --out-dir lib",
     "lint": "./node_modules/.bin/eslint src/* build/*"
   },
