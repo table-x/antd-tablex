@@ -34,7 +34,8 @@
     "antd": "^3.10.4",
     "localforage": "^1.7.3",
     "lodash": "^4.17.11",
-    "moment": "^2.22.2"
+    "moment": "^2.22.2",
+    "rollup-plugin-uglify": "^3.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -62,6 +63,7 @@
     "rollup-plugin-postcss": "^1.6.2"
   },
   "files": [
+    "lib",
     "es",
     "cjs"
   ],
