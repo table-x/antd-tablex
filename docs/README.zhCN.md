@@ -13,7 +13,7 @@
 #### [English](../README.md) | [简体中文](./README.zhCN.md)
 
 ## 现在体验
-你可以在线上亲自[试用一下](https://www.tablex.top)
+你可以在线上亲自[试用一下](https://www.tablex.top/example/zhCN)
 
 ## 快速入门
 在开始之前，需要很好的了解React ES6 and Antd。  
@@ -35,7 +35,7 @@ import TableX from 'antd-tablex';
 ```
 
 ## 文档
- 更多请看[详细文档](#https://www.tablex.top/docs)。
+ 更多请看[详细文档](#https://www.tablex.top/docs/zhCN)。
 
 ## 国际化
 默认语言是英语，也可以在使用时，在本地设置为简体中文。
@@ -43,10 +43,10 @@ import TableX from 'antd-tablex';
 ## 提示
 在真实项目开发中，只有前端展示是不够的，我们在后端需要 ORM 来提供数据查询支持，在这里推荐你用 [sequelize](http://docs.sequelizejs.com/) 解决这个问题，你可以查看这个 demo 仓库([antd-tablex-api](https://github.com/mzonghao/antd-tablex-api))。
 
-## 还未做...
+## 还未完成...
 单元测试 
 
 ## 链接
-- [主页](https://www.tablex.top)
-- [展示样例](https://www.tablex.top/example)
-- [使用文档](https://www.tablex.top/docs)
+- [主页](https://www.tablex.top/zhCN)
+- [展示样例](https://www.tablex.top/example/zhCN)
+- [使用文档](https://www.tablex.top/docs/zhCN)

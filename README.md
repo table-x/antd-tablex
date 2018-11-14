@@ -13,7 +13,7 @@
 #### [English](./README.md) | [简体中文](./docs/README.zhCN.md)
 
 ## Trial Now
-You can [try it](https://www.tablex.top) by yourself right now.
+You can [try it](https://www.tablex.top/example) by yourself right now.
 
 ## Getting Started
 Before delving into antd-tablex, a good knowledge base of React ES6 and Antd is needed.
