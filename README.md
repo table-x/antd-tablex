@@ -12,10 +12,13 @@
 
 #### [English](./README.md) | [简体中文](./docs/README.zhCN.md)
 
+## Trial Now
+Use [it](https://www.tablex.top) by yourself right now.
+
 ## Getting Started
 Before delving into antd-tablex, a good knowledge base of React ES6 and Antd is needed.
 
-Here is a demo repository([Antd-tablex-www](https://github.com/mzonghao/antd-tablex-www)) will guide you to use it easier.
+Here is a [demo](https://github.com/mzonghao/antd-tablex-www/blob/master/src/pages/example/index.js) repository([antd-tablex-www](https://github.com/mzonghao/antd-tablex-www)) will guide you to use it easier.
 
 ## Environment Support
 Modern browsers and Internet Explorer 9+ (with polyfills)  
@@ -28,19 +31,18 @@ npm install antd-tablex --save
 ```
 
 ## Usage
-
 ```jsx
 import TableX from 'antd-tablex';
 ```
 
 ## docs
-[Click here](#https://www.tablex.top/docs)
+Please read [docs](#https://www.tablex.top/docs) to learn more.
 
 ## Internationalization
 The default language of antd-tablex is English as of yet. you can choose Chinese (Simplified) as also.
 
 ## Tips
-In real project development, just frontend may not enough, we may need an ORM framework to help us manage the data layer code. it is recommended that you us [sequelize](http://docs.sequelizejs.com/). You can refer to this demo repository([antd-tablex-api](https://github.com/mzonghao/antd-tablex-api)).
+In real project development, just frontend may not enough, we may need an ORM framework to help us manage the data layer code. it is recommended that you use [sequelize](http://docs.sequelizejs.com/). You can refer to this demo repository([antd-tablex-api](https://github.com/mzonghao/antd-tablex-api)).
 
 ## To do...
 Unit Testing 
