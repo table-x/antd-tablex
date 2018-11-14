@@ -171,12 +171,12 @@ export default class TableX extends React.Component {
     });
   }
 
-  onSearchChange(newSearchItems, clickSearchButton = false) {
+  onSearchChange(newSearchItems, searchNow = false) {
     const { onChange, showPagination } = this.props;
-    const { realTime, pagination: oldPagination } = this.state;
+    const { pagination: oldPagination } = this.state;
     const searchQuery = generateSearchQuery(newSearchItems);
     this.setState({ searchItems: newSearchItems, searchQuery }, () => {
-      if (realTime || clickSearchButton) {
+      if (searchNow) {
         let pagination = false;
         if (showPagination) {
           pagination = Object.assign({}, oldPagination, {

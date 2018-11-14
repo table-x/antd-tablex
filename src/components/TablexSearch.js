@@ -52,23 +52,25 @@ class TablexSearch extends React.Component {
             value
           };
         });
-        onChange(newSearchItems, clickSearchButton);
+        onChange(newSearchItems, true);
       });
     }
   }
 
   handlePredicateChange(keyword, value) {
     const { searchItems, onChange } = this.props;
+    let searchNow = false;
     const newSearchItems = searchItems.map((item) => {
       if (item.keyword !== keyword) {
         return item;
       }
+      searchNow = Boolean(item.value);
       return {
         ...item,
         predicate: value
       };
     });
-    onChange(newSearchItems);
+    onChange(newSearchItems, searchNow);
   }
 
   render() {

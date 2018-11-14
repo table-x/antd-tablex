@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/mzonghao/antd-tablex#readme",
   "main": "lib/index.cjs.js",
-  "module": "lib/index.es.js",
+  "module": "src/index.js",
   "pre-commit": [
     "lint"
   ],
@@ -34,8 +34,7 @@
     "antd": "^3.10.4",
     "localforage": "^1.7.3",
     "lodash": "^4.17.11",
-    "moment": "^2.22.2",
-    "rollup-plugin-uglify": "^3.0.0"
+    "moment": "^2.22.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -60,7 +59,7 @@
     "rollup-plugin-commonjs": "^9.1.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-postcss": "^1.6.2"
+    "rollup-plugin-uglify": "^3.0.0"
   },
   "files": [
     "lib",
