@@ -51,15 +51,6 @@ export default class SearchItem extends React.Component {
 
     let initialElement = null;
     switch (option.type) {
-      case 'text':
-        initialElement = (
-          <Input
-            style={defaultStyle}
-            onBlur={() => { this.onBlurOrChange(option); }}
-            {...option.customProps}
-          />
-        );
-        break;
       case 'textArea':
         initialElement = (
           <TextArea
@@ -111,7 +102,15 @@ export default class SearchItem extends React.Component {
           />
         );
         break;
+      case 'text':
       default:
+        initialElement = (
+          <Input
+            style={defaultStyle}
+            onBlur={() => { this.onBlurOrChange(option); }}
+            {...option.customProps}
+          />
+        );
         break;
     }
 
