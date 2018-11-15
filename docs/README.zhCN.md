@@ -35,7 +35,9 @@ import TableX from 'antd-tablex';
 ```
 
 ## 文档
- 更多请看[详细文档](#https://www.tablex.top/docs/zhCN)。
+ 更多请看[详细文档](https://www.tablex.top/docs/zhCN)。  
+地址1: [docs](https://www.tablex.top/docs/zhCN)  
+地址2: [docs](./All-props.zhCN.md)
 
 ## 国际化
 默认语言是英语，也可以在使用时，在本地设置为简体中文。

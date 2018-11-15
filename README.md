@@ -36,7 +36,9 @@ import TableX from 'antd-tablex';
 ```
 
 ## docs
-Please read [docs](#https://www.tablex.top/docs) to learn more.
+Please read [docs](https://www.tablex.top/docs) to learn more.  
+address 1: [docs](https://www.tablex.top/docs)  
+address 2: [docs](./docs/All-props.md)
 
 ## Internationalization
 The default language of antd-tablex is English as of yet. you can choose Chinese (Simplified) as also.
@@ -45,7 +47,8 @@ The default language of antd-tablex is English as of yet. you can choose Chinese
 In real project development, just frontend may not enough, we may need an ORM framework to help us manage the data layer code. it is recommended that you use [sequelize](http://docs.sequelizejs.com/). You can refer to this demo repository([antd-tablex-api](https://github.com/mzonghao/antd-tablex-api)).
 
 ## To do...
-Unit Testing 
+Unit Testing  
+CI
 
 ## Links
 
