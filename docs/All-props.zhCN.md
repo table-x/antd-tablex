@@ -30,16 +30,15 @@ title: all props
 ***
 ### search
 
-API
-|参数|说明|	类型|默认值|
+|参数|说明|类型|默认值|
 |---|---|---|---|
 |title|搜索项的 label 值，与表格列的 title 对应|string||
 |type|搜索项类型，可选：'text'、'textArea'、'number'、'select'、'date'|string|'text'|
 |keyword|搜索项的关键词，将作为 searchQuery 的一部分在 [onChange](#onChange) 回调时传出|string||
 |predicates|可以对比的符号，格式按照 [sequelize 的 Op](http://docs.sequelizejs.com/manual/tutorial/querying.html)|array||
-|defaultPredicate|默认显示的符号|||
-|customProps|如果搜索项为select，可以在此配置 selectOptions ，如果是 date，可以配置 showTime 等属性。|||
-|defaultValue|搜索项默认值|||
+|defaultPredicate|默认显示的符号|string||
+|customProps|如果搜索项为select，可以在此配置 selectOptions ，如果是 date，可以配置 showTime 等属性。|object||
+|defaultValue|搜索项默认值|string||
 
 ***
 ### onChange

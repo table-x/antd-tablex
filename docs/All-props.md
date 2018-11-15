@@ -28,18 +28,19 @@ title: all props
 ***
 ### search
 
-API
 |Property|Description|Type|Default|
 |---|---|---|---|
 |title|Search item's Label text, registered with title of columns|string||
 |type|Search item's type, values: 'text', 'textArea', 'number', 'select', 'date'|string|'text'|
 |keyword|Search key of this item, will be used in searchQuery at [onChange of Tablex](#onChange)|string||
 |predicates|Select predicates of this item, type as [sequelize's Op](http://docs.sequelizejs.com/manual/tutorial/querying.html)|array||
-|defaultPredicate|Default predicate of this item|||
-|customProps|If type is select, you can add selectOptions in this property, if type is date, you can also add showTime props in this property|||
-|defaultValue|Default value of this item|||
+|defaultPredicate|Default predicate of this item|string||
+|customProps|If type is select, you can add selectOptions in this property, if type is date, you can also add showTime props in this property|object||
+|defaultValue|Default value of this item|string||
+
 ***
 ### onChange
+
 when search, pagination, filters or sorter is changed, you can use onChange to control data.
 
 arguments includes searchQuery, pagination, filter, sorter, extra.
