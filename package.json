@@ -64,7 +64,8 @@
   "files": [
     "lib",
     "es",
-    "cjs"
+    "cjs",
+    "docs"
   ],
   "peerDependencies": {
     "antd": ">=3.0.0",
