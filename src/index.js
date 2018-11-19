@@ -54,7 +54,7 @@ export default class TableX extends React.Component {
     tableTitle: null,
     tableProps: {},
     showPagination: true,
-    paginationTotal: -1,
+    paginationTotal: 0,
     showSearch: true,
     searchOptions: [],
     searchRealTime: true,
@@ -91,15 +91,6 @@ export default class TableX extends React.Component {
 
   componentDidMount() {
     this.onInitLocal();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { pagination: oldPagination } = this.state;
-    const { showPagination, paginationTotal } = nextProps;
-    if (showPagination && oldPagination && oldPagination.total && (oldPagination.total !== paginationTotal)) {
-      const pagination = Object.assign({}, oldPagination, { total: paginationTotal });
-      this.setState({ pagination });
-    }
   }
 
   onInitWithoutLocal() {
@@ -275,6 +266,7 @@ export default class TableX extends React.Component {
   render() {
     const {
       dataSource, tableRowKey, tableTitle, tableProps: tableOtherProps,
+      showPagination, paginationTotal,
       showSearch, searchOptions, loading, errorMessage
     } = this.props;
     const {
@@ -285,6 +277,9 @@ export default class TableX extends React.Component {
     const { bordered, size } = localConfigs;
     const rowKey = (tableRowKey === noop) ? (t => (t[filterColumns[0].dataIndex])) : tableRowKey;
     const language = (lang === 'enUS') ? undefined : zhCN;
+    if (showPagination && pagination) {
+      Object.assign(pagination, { total: paginationTotal });
+    }
 
     const manager = (
       <div>

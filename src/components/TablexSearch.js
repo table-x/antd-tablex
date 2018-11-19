@@ -6,6 +6,7 @@ import {
   Form, Card, Row, Col, Button
 } from 'antd';
 import SearchItem from './SearchItem';
+import { translateWords } from '../utils';
 
 class TablexSearch extends React.Component {
   static propTypes = {
@@ -114,7 +115,7 @@ class TablexSearch extends React.Component {
                 style={{ marginRight: (showAllButton ? 20 : 0) }}
                 onClick={this.onClickClearButton}
               >
-                clear
+                {translateWords(lang, 'clear')}
               </Button>
             )}
             {showSearchButton && (
@@ -124,7 +125,7 @@ class TablexSearch extends React.Component {
                 style={{ marginLeft: (showAllButton ? 20 : 0) }}
                 onClick={this.onClickSearchButton}
               >
-                search
+                {translateWords(lang, 'search')}
               </Button>
             )}
           </Row>

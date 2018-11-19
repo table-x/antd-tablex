@@ -80,7 +80,12 @@ export default [
     zhCN: '小'
   },
   {
-    enUs: ''
+    enUS: 'clear',
+    zhCN: '清空'
+  },
+  {
+    enUS: 'search',
+    zhCN: '搜索'
   },
   {
     value: '$eq',
